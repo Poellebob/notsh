@@ -21,4 +21,9 @@
           default = self.apps.${system}.notsh;
         };
       });
+
+  overlays.default = final: prev: {
+    notsh = final.callPackage ./default.nix { };
+  };
+}
 }
