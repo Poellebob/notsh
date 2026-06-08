@@ -148,11 +148,30 @@ int open_note(const char *notes_dir, const char *name) {
   return open_in_editor(filepath);
 }
 
+int remove_note(const char *notes_dir, const char *name) {
+  char filepath[4096];
+  snprintf(filepath, sizeof(filepath), "%s/%s.md", notes_dir, name);
+
+  struct stat st;
+  if (stat(filepath, &st) == -1) {
+    return 1;
+  }
+
+  if (unlink(filepath) == -1) {
+    perror("unlink");
+    return 1;
+  }
+
+  printf("Removed: %s\n", filepath);
+  return 0;
+}
+
 void show_help(const char *progname) {
   printf("Usage: %s [command] [arguments]\n\n", progname);
   printf("Commands:\n");
   printf("  (no arguments)   Create a new note\n");
   printf("  open <name>      Open (or create) an existing note\n");
+  printf("  remove <name>    Delete a note\n");
   printf("  list             List all notes (without .md extension)\n");
   printf("  --help           Show this help message\n");
 }
@@ -224,6 +243,26 @@ int main(int argc, char *argv[]) {
       printf("Error: invalid name");
       return 1;
     };
+    return 0;
+  }
+
+  if (strcmp(argv[1], "remove") == 0) {
+    if (argc < 3) {
+      fprintf(stderr, "Error: missing note name.\nUsage: %s remove <name>\n", argv[0]);
+      return 1;
+    }
+
+    char name[256];
+    strncpy(name, argv[2], sizeof(name) - 1);
+    name[sizeof(name) - 1] = '\0';
+    for (char *p = name; *p; p++) {
+      if (*p == ' ') *p = '-';
+    }
+
+    if (remove_note(notesDir, name)) {
+      printf("Error: note not found");
+      return 1;
+    }
     return 0;
   }
 
