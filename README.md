@@ -13,9 +13,19 @@ note list         List all notes
 ## Build
 
 ```
-nix build .#notsh        # nix flake
-nix run . -- --help      # run directly
+nix build .#notsh       # nix flake
+nix run .               # run directly
+```
 
-just build  # without nix
-just run
+### without nix
+
+**Requirements:**
+- `meson`
+- `ninja`
+- `clang`
+- `just`
+
+```
+just build
+./build/note
 ```

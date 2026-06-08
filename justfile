@@ -8,20 +8,14 @@ setup:
 
 # Build project
 build:
-  if [ ! -d ./build ]; then
-    just setup 
-  fi
-	meson compile -C build
-
-# Run binary
-run:
-	./build/note
+  [ -d ./build ] || just setup 
+  meson compile -C build
 
 # Full rebuild (clean setup + build)
 rebuild:
-	just clean 
-	just build
+  just clean 
+  just build
 
 # Clean build directory
 clean:
-	rm -rf build
+  rm -rf build

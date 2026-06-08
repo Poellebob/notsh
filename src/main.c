@@ -108,7 +108,7 @@ void ask_filename(char *out, size_t out_size) {
       }
       snprintf(out, out_size, "%s.md", input);
       got_name = 1;
-    }#include <time.h>
+    }
   }
 }
 
