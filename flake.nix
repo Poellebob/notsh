@@ -26,4 +26,3 @@
     notsh = final.callPackage ./default.nix { };
   };
 }
-}
