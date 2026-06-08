@@ -41,20 +41,6 @@ Then use it like any other package:
 }
 ```
 
-Or add only the overlay in your `configuration.nix`:
-
-```nix
-{ config, pkgs, lib, inputs, ... }: 
-
-{
-  nixpkgs.overlays = [
-    nixpkgs.overlays = [ inputs.notsh.overlays.default ];
-  ];
-}
-```
-
-Making `pkgs.notsh` available in `configuration.nix`.
-
 ## Build
 
 ```
